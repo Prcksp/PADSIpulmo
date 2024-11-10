@@ -5,6 +5,7 @@
         <div class="section-header">
             <h1>{{ $pageTitle }}</h1>
         </div>
+        
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
