@@ -25,9 +25,9 @@ class UserController extends Controller
     {
         $data['pageTitle'] = 'Pengguna';
         $data['users'] = DB::table($this->table)
-            ->select('user.*')
-            ->where('role', 'barista')
-            ->get();
+        ->select('user.*')
+        ->whereIn('role', ['manager', 'barista'])
+        ->get();
         $data['fields'] = $this->fields; // Pass fields configuration to the view
         return view('users.index', $data);
     }
@@ -47,7 +47,8 @@ class UserController extends Controller
     {
         return [
             // 'admin' => 'Admin',
-            'guru' => 'Guru',
+            'manager' => 'Manajer',
+            'barista' => 'Barista'
         ];
     }
 

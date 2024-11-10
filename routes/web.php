@@ -3,6 +3,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\MyAccountController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -35,6 +36,9 @@ Route::get('/', function() {
 Route::resource('/barangs', BarangController::class)->middleware('check.session');
 Route::resource('/produks', ProdukController::class)->middleware('check.session');
 Route::resource('/users', UserController::class)->middleware('check.session');
+Route::resource('/customers', CustomerController::class)->middleware('check.session');
+
+
 // Dashboard route with session check middleware
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('check.session');
 // Other routes without middleware
