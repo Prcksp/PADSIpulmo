@@ -66,7 +66,13 @@
                                             <tr>
                                                 <td>{{ $no++ }}</td>
                                                 @foreach ($fields as $field => $label)
-                                                    <td>{{ $barang->$field }}</td>
+                                                    <td>
+                                                        @if ($field == 'harga_barang')
+                                                            Rp {{ number_format($barang->$field, 2, ',', '.') }} 
+                                                        @else
+                                                            {{ $barang->$field }}
+                                                        @endif
+                                                    </td>
                                                 @endforeach
                                                 <td>
                                                     <a href="{{ url('barangs/'.$barang->id_barang.'/edit') }}" class="btn btn-warning btn-sm">
