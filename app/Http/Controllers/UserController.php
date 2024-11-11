@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    protected $table = 'user';
+    protected $table = 'users';
 
     // Define the fields configuration
     protected $fields = [
@@ -25,7 +25,7 @@ class UserController extends Controller
     {
         $data['pageTitle'] = 'Pengguna';
         $data['users'] = DB::table($this->table)
-        ->select('user.*')
+        ->select('users.*')
         ->whereIn('role', ['manager', 'barista'])
         ->get();
         $data['fields'] = $this->fields; // Pass fields configuration to the view
