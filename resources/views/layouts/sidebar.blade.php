@@ -3,7 +3,7 @@
         <a href="{{ url('/') }}">{{ config('app.name') }}</a>
     </div>
     <div class="sidebar-brand sidebar-brand-sm">
-        <a href="{{ url('/') }}">PW</a>
+        <a href="{{ url('/') }}">KP</a>
     </div>
     <ul class="sidebar-menu">
         <li class="menu-header">Dashboard</li>
@@ -22,6 +22,7 @@
 
         <li><a class="nav-link" href="{{ url('/customers') }}"><i class="fas fa-users-cog"></i> <span>Data Pelanggan</span></a></li>
         <li><a class="nav-link" href="{{ url('/penjualans') }}"><i class="fas fa-cart-plus"></i> <span>Penjualan</span></a></li>
+        <li><a class="nav-link" href="{{ url('/pembelians') }}"><i class="fas fa-store"></i> <span>Pembelian</span></a></li>
         <li><a class="nav-link" href="{{ url('/riwayatpenjualans') }}"><i class="fas fa-history"></i> <span>Riwayat Penjualan</span></a></li>
     </ul>
 </aside>

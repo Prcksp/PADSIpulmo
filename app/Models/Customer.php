@@ -56,4 +56,13 @@ class Customer extends Model
      * @var string
      */
     protected $keyType = 'string';
+
+    /**
+     * Mutator for setting the date
+     */
+    public function setTanggalLahirCustomerAttribute($value)
+    {
+        // Format the date to Y-m-d before saving
+        $this->attributes['tanggal_lahir_customer'] = date('Y-m-d', strtotime($value));
+    }
 }

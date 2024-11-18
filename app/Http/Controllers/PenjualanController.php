@@ -25,7 +25,7 @@ class PenjualanController extends Controller
         // Get transactions with necessary joins
         $data['transactions'] = DB::table('detail_transaksi_penjualan')
             ->join('produk', 'detail_transaksi_penjualan.id_produk', '=', 'produk.id_produk')
-            ->join('customer', 'detail_transaksi_penjualan.id_customer', '=', 'customer.id_customer')
+            // ->join('customer', 'detail_transaksi_penjualan.id_customer', '=', 'customer.id_customer')
             ->join('users', 'detail_transaksi_penjualan.id_pengguna', '=', 'users.id')  // Assuming users table is linked with 'id' column
             ->where('detail_transaksi_penjualan.status', 'belum_bayar') // Add this condition
             ->select(
@@ -33,9 +33,9 @@ class PenjualanController extends Controller
                 'detail_transaksi_penjualan.id_detail_transaksi_penjualan as id_detail_transaksi',
                 'produk.nama_produk',
                 'produk.harga_produk',
-                'customer.nama_customer',
-                'customer.email_customer',
-                'customer.no_telepon_customer', 
+                // 'customer.nama_customer',
+                // 'customer.email_customer',
+                // 'customer.no_telepon_customer', 
                 'users.name as user_name'
             )
             ->get();
@@ -49,7 +49,7 @@ class PenjualanController extends Controller
 
         // Add totalHarga to data array
         $data['totalHarga'] = $totalHarga->total_harga ?? 0;
-        $data['kodeTransaksi'] = 'TRX' . now()->format('YmdHis'); // Format: TRXYYYYMMDDHHMMSS
+        $data['kodeTransaksi'] = 'TRXJ' . now()->format('YmdHis'); // Format: TRXYYYYMMDDHHMMSS
         // Return view with the necessary data
         return view('penjualans.index', $data);
     }
@@ -62,7 +62,7 @@ class PenjualanController extends Controller
         // Prepare the data for insertion
         $data = [// Generate a unique transaction code (example)
             'id_produk' => $request['product'],
-            'id_customer' => $request['customer'],
+            // 'id_customer' => $request['customer'],
             'id_pengguna' => session('user_id'), // Assuming the user is logged in
             'kuantitas' => $request['quantity'],
             'status' => 'belum_bayar', // Default status
@@ -103,7 +103,7 @@ class PenjualanController extends Controller
             }
 
             // Ambil id_customer dari detail transaksi
-            $idCustomer = $detailTransaksi->id_customer;
+            $idCustomer = $request['customer'];
 
             // Insert data ke tabel 'transaksi_penjualan'
             DB::table('transaksi_penjualan')->insert([

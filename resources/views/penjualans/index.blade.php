@@ -45,16 +45,7 @@
                                 <!-- Display Today's Date -->
                                 <p><strong>Tanggal:</strong> {{ date('Y-m-d') }}</p>
 
-                                <!-- Dropdown for Customer Name -->
-                                <div class="form-group">
-                                    <label for="customer">Pilih Nama Pelanggan</label>
-                                    <select id="customer" name="customer" class="form-control select2" required>
-                                        <option value="" disabled selected>Cari dan pilih pelanggan</option>
-                                        @foreach ($customers as $customer)
-                                            <option value="{{ $customer->id_customer }}">{{ $customer->nama_customer }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -170,6 +161,16 @@
                             <div class="form-group">
                                 <label for="kode_transaksi">Kode Transaksi</label>
                                 <input type="text" id="kode_transaksi" name="kode_transaksi" class="form-control" value="{{ $kodeTransaksi }}" readonly>
+                            </div>
+                            <!-- Dropdown for Customer Name -->
+                            <div class="form-group">
+                                <label for="customer">Pilih Nama Pelanggan</label>
+                                <select id="customer" name="customer" class="form-control select2" required>
+                                    <option value="" disabled selected>Cari dan pilih pelanggan</option>
+                                    @foreach ($customers as $customer)
+                                        <option value="{{ $customer->id_customer }}">{{ $customer->nama_customer }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <!-- Total Harga -->
                             <div class="form-group">

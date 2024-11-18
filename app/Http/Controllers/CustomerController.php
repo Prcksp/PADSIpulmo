@@ -20,8 +20,14 @@ class CustomerController extends Controller
     public function index()
     {
         $data['pageTitle'] = 'Pelanggan';
-        $data['customers'] = Customer::all();
-        $data['fields'] = $this->fields; // Pass fields configuration to the view
+        $data['fields'] = $this->fields;
+
+        // Format the Tanggal Lahir field for display
+        $data['customers'] = Customer::all()->map(function ($customer) {
+            $customer->tanggal_lahir_customer = date('Y-m-d', strtotime($customer->tanggal_lahir_customer)); // Ensure formatting
+            return $customer;
+        });
+        
         return view('customers.index', $data);
     }
 
@@ -31,7 +37,7 @@ class CustomerController extends Controller
             'nama_customer' => 'required|string|max:50|unique:customer,nama_customer',
             'alamat_customer' => 'required|string|max:50',
             'no_telepon_customer' => 'required|string|max:50',
-            'tanggal_lahir_customer' => 'required|date',
+            'tanggal_lahir_customer' => 'required|date_format:Y-m-d',
             'email_customer' => 'required|string|email|max:50',
         ];
     }
@@ -53,7 +59,7 @@ class CustomerController extends Controller
             'nama_customer' => 'required|string|max:50',
             'alamat_customer' => 'required|string|max:50',
             'no_telepon_customer' => 'required|string|max:50',
-            'tanggal_lahir_customer' => 'required|date',
+            'tanggal_lahir_customer' => 'required|date_format:Y-m-d',
             'email_customer' => 'required|string|email|max:50',
         ];
     }

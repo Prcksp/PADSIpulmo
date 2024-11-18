@@ -5,6 +5,7 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\PenjualanController;
+use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\RiwayatPenjualanController;
 use App\Http\Controllers\MyAccountController;
 use App\Http\Controllers\PermissionController;
@@ -40,6 +41,7 @@ Route::resource('/produks', ProdukController::class)->middleware('check.session'
 Route::resource('/users', UserController::class)->middleware('check.session');
 Route::resource('/customers', CustomerController::class)->middleware('check.session');
 Route::resource('/penjualans', PenjualanController::class)->middleware('check.session');
+Route::resource('/pembelians', PembelianController::class)->middleware('check.session');
 Route::resource('/riwayatpenjualans', RiwayatPenjualanController::class)->middleware('check.session');
 Route::post('/penjualans/addCart', [PenjualanController::class, 'addCart'])->name('penjualans.addCart')->middleware('check.session');
 Route::delete('penjualans/{penjualan}', [PenjualanController::class, 'destroy'])->name('penjualans.destroy');
