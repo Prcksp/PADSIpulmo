@@ -46,7 +46,7 @@ class BarangController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'nama_barang' => 'required|string|max:50',
+            'nama_barang' => 'required|string|max:50|unique:barang,nama_barang', // Check for uniqueness
             'deskripsi_barang' => 'nullable|string|max:50',
             'jumlah_barang' => 'required|integer',
             'harga_barang' => 'required|numeric',
@@ -54,6 +54,7 @@ class BarangController extends Controller
 
         $customMessages = [
             'nama_barang.required' => 'Nama barang belum diisi!',
+            'nama_barang.unique' => 'Nama barang sudah ada dalam sistem!',
             'jumlah_barang.required' => 'Jumlah barang belum diisi!',
             'harga_barang.required' => 'Harga barang belum diisi!',
         ];

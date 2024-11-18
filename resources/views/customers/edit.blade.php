@@ -56,13 +56,13 @@
                                     @enderror
                                 </div>
 
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="jumlah_poin">Jumlah Poin</label>
-                                    <input type="number" name="jumlah_poin" class="form-control" value="{{ old('jumlah_poin', $customer->jumlah_poin) }}" step="1" min="0">
+                                    <input type="number" name="jumlah_poin" class="form-control" value="{{ old('jumlah_poin', $customer->jumlah_poin) }}" step="1" min="0" disabled>
                                     @error('jumlah_poin')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
-                                </div>
+                                </div> -->
 
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary">Update Customer</button>

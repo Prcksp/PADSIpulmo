@@ -14,8 +14,7 @@ class CustomerController extends Controller
         'alamat_customer' => 'Alamat',
         'no_telepon_customer' => 'Nomor Telepon',
         'tanggal_lahir_customer' => 'Tanggal Lahir',
-        'email_customer' => 'Email',
-        'jumlah_poin' => 'Jumlah Poin',
+        'email_customer' => 'Email'
     ];
 
     public function index()
@@ -29,16 +28,37 @@ class CustomerController extends Controller
     protected function getValidationRules()
     {
         return [
+            'nama_customer' => 'required|string|max:50|unique:customer,nama_customer',
+            'alamat_customer' => 'required|string|max:50',
+            'no_telepon_customer' => 'required|string|max:50',
+            'tanggal_lahir_customer' => 'required|date',
+            'email_customer' => 'required|string|email|max:50',
+        ];
+    }
+
+    protected function getCustomMessages()
+    {
+        return [
+            'nama_customer.required' => 'Nama pelanggan belum diisi!',
+            'nama_customer.unique' => 'Nama pelanggan sudah ada di sistem!',
+            'alamat_customer.required' => 'Alamat belum diisi!',
+            'no_telepon_customer.required' => 'Nomor telepon belum diisi!',
+            'tanggal_lahir_customer.required' => 'Tanggal lahir belum diisi!',
+            'email_customer.required' => 'Email belum diisi!',
+        ];
+    }
+    protected function getValidationRulesUpdate()
+    {
+        return [
             'nama_customer' => 'required|string|max:50',
             'alamat_customer' => 'required|string|max:50',
             'no_telepon_customer' => 'required|string|max:50',
             'tanggal_lahir_customer' => 'required|date',
             'email_customer' => 'required|string|email|max:50',
-            'jumlah_poin' => 'nullable|integer',
         ];
     }
 
-    protected function getCustomMessages()
+    protected function getCustomMessagesUpdate()
     {
         return [
             'nama_customer.required' => 'Nama pelanggan belum diisi!',
@@ -48,7 +68,6 @@ class CustomerController extends Controller
             'email_customer.required' => 'Email belum diisi!',
         ];
     }
-
     public function create()
     {
         $data['pageTitle'] = 'Tambah Data Pelanggan';
@@ -83,8 +102,8 @@ class CustomerController extends Controller
 
     public function update(Request $request, $id)
     {
-        $rules = $this->getValidationRules();
-        $customMessages = $this->getCustomMessages();
+        $rules = $this->getValidationRulesUpdate();
+        $customMessages = $this->getCustomMessagesUpdate();
 
         $validator = Validator::make($request->all(), $rules, $customMessages);
 

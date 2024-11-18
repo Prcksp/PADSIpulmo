@@ -4,6 +4,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\PenjualanController;
+use App\Http\Controllers\RiwayatPenjualanController;
 use App\Http\Controllers\MyAccountController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -37,7 +39,12 @@ Route::resource('/barangs', BarangController::class)->middleware('check.session'
 Route::resource('/produks', ProdukController::class)->middleware('check.session');
 Route::resource('/users', UserController::class)->middleware('check.session');
 Route::resource('/customers', CustomerController::class)->middleware('check.session');
-
+Route::resource('/penjualans', PenjualanController::class)->middleware('check.session');
+Route::resource('/riwayatpenjualans', RiwayatPenjualanController::class)->middleware('check.session');
+Route::post('/penjualans/addCart', [PenjualanController::class, 'addCart'])->name('penjualans.addCart')->middleware('check.session');
+Route::delete('penjualans/{penjualan}', [PenjualanController::class, 'destroy'])->name('penjualans.destroy');
+Route::post('/penjualans/confirm', [PenjualanController::class, 'confirm'])->name('penjualans.confirm');
+Route::get('/riwayatpenjualans/{kode_transaksi}', [RiwayatPenjualanController::class, 'getDetailTransaksi']);
 
 // Dashboard route with session check middleware
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('check.session');
