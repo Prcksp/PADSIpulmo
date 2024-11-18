@@ -66,8 +66,15 @@
                                             <tr>
                                                 <td>{{ $no++ }}</td>
                                                 @foreach ($fields as $field => $label)
-                                                    <td>{{ $customer->$field }}</td>
+                                                    <td>
+                                                        @if ($field === 'tanggal_lahir_customer' && strlen($customer->$field) > 9)
+                                                            {{ substr($customer->$field, 0, 10) }} <!-- Display only first 9 characters -->
+                                                        @else
+                                                            {{ $customer->$field }} <!-- Display full content for other fields -->
+                                                        @endif
+                                                    </td>
                                                 @endforeach
+
                                                 <td>
                                                     <a href="{{ url('customers/'.$customer->id_customer.'/edit') }}" class="btn btn-warning btn-sm">
                                                         <i class="fas fa-edit"></i>

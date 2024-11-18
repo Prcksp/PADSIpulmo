@@ -42,11 +42,18 @@
 
                                 <div class="form-group">
                                     <label for="tanggal_lahir_customer">Tanggal Lahir</label>
-                                    <input type="date" name="tanggal_lahir_customer" class="form-control" value="{{ old('tanggal_lahir_customer', $customer->tanggal_lahir_customer) }}">
+                                    <input 
+                                        type="date" 
+                                        name="tanggal_lahir_customer" 
+                                        class="form-control" 
+                                        value="{{ old('tanggal_lahir_customer', optional($customer->tanggal_lahir_customer)->format('Y-m-d')) }}"
+                                    >
                                     @error('tanggal_lahir_customer')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+
+
 
                                 <div class="form-group">
                                     <label for="email_customer">Email</label>

@@ -92,30 +92,53 @@ class BarangController extends Controller
      */
     public function update(Request $request, $id_barang)
     {
+        // Find the barang by ID
+        $barang = Barang::findOrFail($id_barang);
+    
+        // Define validation rules
         $rules = [
-            'nama_barang' => 'required|string|max:50',
+            'nama_barang' => 'required|string|max:50|unique:barang,nama_barang,' . $id_barang . ',id_barang',
             'deskripsi_barang' => 'nullable|string|max:50',
             'jumlah_barang' => 'required|integer',
             'harga_barang' => 'required|numeric',
         ];
-
+        
+        // Define custom validation messages
         $customMessages = [
             'nama_barang.required' => 'Nama barang belum diisi!',
+            'nama_barang.unique' => 'Nama barang sudah ada dalam sistem!',
             'jumlah_barang.required' => 'Jumlah barang belum diisi!',
             'harga_barang.required' => 'Harga barang belum diisi!',
         ];
-
+    
+        // Run the validation
         $validator = Validator::make($request->all(), $rules, $customMessages);
-
+    
+        // Check if validation fails
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-
-        $barang = Barang::findOrFail($id_barang);
-        $barang->update($request->all());
-
-        return redirect('/barangs')->with('message', 'Data barang telah diubah');
+    
+        // Prepare an array to store only the changed fields
+        $updatedData = [];
+        foreach ($rules as $field => $rule) {
+            // Check if the field has changed before updating it
+            if ($barang->{$field} !== $request->input($field)) {
+                $updatedData[$field] = $request->input($field);
+            }
+        }
+    
+        // Update the fields if there are any changes
+        if (!empty($updatedData)) {
+            $barang->update($updatedData);
+            return redirect('/barangs')->with('message', 'Data barang telah diubah');
+        }
+    
+        // If no fields have changed, return a message
+        return redirect('/barangs')->with('message', 'Tidak ada perubahan pada data barang');
     }
+    
+    
 
     /**
      * Remove the specified barang from storage.
