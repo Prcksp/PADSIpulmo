@@ -15,7 +15,8 @@ class CustomerController extends Controller
         'alamat_customer' => 'Alamat',
         'no_telepon_customer' => 'Nomor Telepon',
         'tanggal_lahir_customer' => 'Tanggal Lahir',
-        'email_customer' => 'Email'
+        'email_customer' => 'Email',
+        'jumlah_poin' => 'Poin'
     ];
 
     public function index()

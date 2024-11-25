@@ -20,7 +20,7 @@ class Produk extends Model
 
     // Define the fillable attributes for mass assignment
     protected $fillable = [
-        'id_produk', 'nama_produk', 'deskripsi_produk', 'harga_produk'
+        'id_produk', 'nama_produk', 'deskripsi_produk', 'harga_produk', 'biaya_poin'
     ];
 
     // Optionally, define the data type casts for attributes

@@ -32,13 +32,13 @@
                                     @enderror
                                 </div>
 
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="jumlah_produk">Jumlah Produk</label>
                                     <input type="number" name="jumlah_produk" class="form-control" value="{{ old('jumlah_produk', $produk->jumlah_produk) }}">
                                     @error('jumlah_produk')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
-                                </div>
+                                </div> -->
 
                                 <div class="form-group">
                                     <label for="harga_produk">Harga Produk</label>
@@ -47,7 +47,13 @@
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-
+                                <div class="form-group">
+                                    <label for="biaya_poin">Biaya Poin</label>
+                                    <input type="number" name="biaya_poin" class="form-control" value="{{ old('biaya_poin', $produk->biaya_poin) }}">
+                                    @error('biaya_poin')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary">Update Produk</button>
                                 </div>

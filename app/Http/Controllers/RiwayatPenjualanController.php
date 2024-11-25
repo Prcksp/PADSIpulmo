@@ -42,6 +42,7 @@ class RiwayatPenjualanController extends Controller
                 'detail_transaksi_penjualan.id_produk',
                 'detail_transaksi_penjualan.kuantitas',
                 'produk.harga_produk as harga',
+                'produk.biaya_poin as biaya_poin',
                 'detail_transaksi_penjualan.status',
                 'produk.nama_produk',
                 DB::raw('produk.harga_produk * detail_transaksi_penjualan.kuantitas as total_harga') // Calculate total_harga

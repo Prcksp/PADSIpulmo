@@ -141,6 +141,7 @@
                             kuantitas: '{{ $detail->kuantitas }}',
                             status: '{{ $detail->status }}',
                             harga: {{ $detail->harga }},
+                            biaya_poin: {{ $detail->biaya_poin }},
                             total_harga: {{ $detail->total_harga }}
                         });
                     }
@@ -150,13 +151,22 @@
                 $('#transactionDetailList').empty();
 
                 // Append the transaction details to the modal
-                details.forEach(function(detail) {
+               details.forEach(function(detail) {
                     var formattedHarga = formatRupiah(detail.harga);
                     var formattedTotalHarga = formatRupiah(detail.total_harga);
+
+                    // Jika harga adalah 0, gunakan biaya_poin
+                    if (detail.harga === 0) {
+                        formattedHarga = detail.biaya_poin + ' Poin'; // Gunakan format biaya_poin
+                        formattedTotalHarga = detail.biaya_poin * detail.kuantitas + ' Poin'; // Total harga juga dalam poin
+                    }
+
                     $('#transactionDetailList').append(
-                        '<li>' + detail.nama_produk + ' - ' + detail.kuantitas + ' x Rp ' + formattedHarga + ' = Rp ' + formattedTotalHarga + '</li>'
+                        '<li>' + detail.nama_produk + ' - ' + detail.kuantitas + 
+                        ' x ' + formattedHarga + ' = ' + formattedTotalHarga + '</li>'
                     );
                 });
+
             });
         });
     </script>

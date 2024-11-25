@@ -28,6 +28,11 @@
                 {{ session('success') }}
             </div>
         @endif
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
 
         <div class="section-body">
             <form method="POST" action="{{ route('penjualans.addCart') }}">
@@ -55,14 +60,20 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="product">Pilih Produk</label>
-                                    <select id="product" name="product" class="form-control select2" required>
-                                        <option value="" disabled selected>Cari dan pilih produk</option>
-                                        @foreach ($produks as $produk)
-                                            <option value="{{ $produk->id_produk }}">
-                                                {{ $produk->nama_produk }} - Rp {{ number_format($produk->harga_produk, 0, ',', '.') }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                                  <select id="product" name="product" class="form-control select2" required>
+                                    <option value="" disabled selected>Cari dan pilih produk</option>
+                                    @foreach ($produks as $produk)
+                                        <option value="{{ $produk->id_produk }}">
+                                            {{ $produk->nama_produk }} - 
+                                            @if ($produk->harga_produk == 0)
+                                                {{ $produk->biaya_poin }} Poin
+                                            @else
+                                                Rp {{ number_format($produk->harga_produk, 0, ',', '.') }}
+                                            @endif
+                                        </option>
+                                    @endforeach
+                                </select>
+
                                 </div>
 
                                 <div class="form-group">
@@ -103,36 +114,49 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-striped text-center" id="datatable">
-                                    <thead>
+                            <table class="table table-striped text-center" id="datatable">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Pesanan</th>
+                                        <th>Harga</th>
+                                        <th>Total Harga</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($transactions as $index => $transaction)
                                         <tr>
-                                            <th>No.</th>
-                                            <th>Pesanan</th>
-                                            <th>Harga</th>
-                                            <th>Total Harga</th>
-                                            <th>Aksi</th>
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ $transaction->nama_produk }} - x{{ $transaction->kuantitas }}</td>
+                                            <td>
+                                                @if ($transaction->harga_produk == 0 || $transaction->biaya_poin > 1)
+                                                    {{ number_format($transaction->biaya_poin, 0) }} Poin
+                                                @else
+                                                    Rp {{ number_format($transaction->harga_produk, 2) }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($transaction->harga_produk == 0 || $transaction->biaya_poin > 1)
+                                                    {{ number_format($transaction->biaya_poin * $transaction->kuantitas, 0) }} Poin
+                                                @else
+                                                    Rp {{ number_format($transaction->harga_produk * $transaction->kuantitas, 2) }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <form action="{{ route('penjualans.destroy', $transaction->id_detail_transaksi) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus data ini?')">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($transactions as $index => $transaction)
-                                            <tr>
-                                                <td>{{ $index + 1 }}</td>
-                                                <td>{{ $transaction->nama_produk }} - x{{ $transaction->kuantitas }}</td>
-                                                <td>Rp {{ number_format($transaction->harga_produk, 2) }}</td>
-                                                <td>Rp {{ number_format($transaction->kuantitas * $transaction->harga_produk, 2) }}</td>
-                                                <td>
-                                                    <form action="{{ route('penjualans.destroy', $transaction->id_detail_transaksi) }}" method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus data ini?')">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                    @endforeach
+                                </tbody>
+                            </table>
+
                             </div>
                         </div>
                     </div>
@@ -157,7 +181,7 @@
                                     <select id="customer" name="customer" class="form-control select2" required>
                                         <option value="" disabled selected>Cari dan pilih pelanggan</option>
                                         @foreach ($customers as $customer)
-                                            <option value="{{ $customer->id_customer }}">{{ $customer->nama_customer }}</option>
+                                            <option value="{{ $customer->id_customer }}">{{ $customer->nama_customer }} - {{ $customer->jumlah_poin }} Poin</option>
                                         @endforeach
                                     </select>
                                 </div>

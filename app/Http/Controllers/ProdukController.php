@@ -21,6 +21,7 @@ class ProdukController extends Controller
             'nama_produk' => 'Nama Produk',
             'deskripsi_produk' => 'Deskripsi Produk',
             'harga_produk' => 'Harga Produk',
+            'biaya_poin' => 'Biaya Poin'
         ];
         return view('produks.index', $data);
     }
@@ -48,6 +49,7 @@ class ProdukController extends Controller
             'nama_produk' => 'required|string|max:50',
             'deskripsi_produk' => 'nullable|string|max:50',
             'harga_produk' => 'required|numeric',
+            'biaya_poin' => 'required|numeric'
         ];
 
         $customMessages = [
@@ -97,6 +99,7 @@ class ProdukController extends Controller
         $customMessages = [
             'nama_produk.required' => 'Nama produk belum diisi!',
             'harga_produk.required' => 'Harga produk belum diisi!',
+            'biaya_poin.required' => 'Biaya poin belum diisi!',
         ];
 
         $validator = Validator::make($request->all(), $rules, $customMessages);
