@@ -47,7 +47,7 @@ Route::post('/penjualans/addCart', [PenjualanController::class, 'addCart'])->nam
 Route::delete('penjualans/{penjualan}', [PenjualanController::class, 'destroy'])->name('penjualans.destroy');
 Route::post('/penjualans/confirm', [PenjualanController::class, 'confirm'])->name('penjualans.confirm');
 Route::get('/riwayatpenjualans/{kode_transaksi}', [RiwayatPenjualanController::class, 'getDetailTransaksi']);
-
+Route::get('/penjualan/detail/{kode_transaksi}', [RiwayatPenjualanController::class, 'show'])->name('penjualan.detail');
 // Dashboard route with session check middleware
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('check.session');
 // Other routes without middleware

@@ -74,9 +74,9 @@
                                             <td>Rp {{ number_format($transaction->total_harga, 0, ',', '.') }}</td>
                                             <td>{{ $transaction->user_name }}</td>
                                             <td>
-                                                <button class="btn btn-info btn-sm view-detail" data-transaction-id="{{ $transaction->kode_transaksi }}" data-toggle="modal" data-target="#transactionDetailModal">
-                                                    Detail Transaksi
-                                                </button>
+                                                <a href="{{ route('penjualan.detail', $transaction->kode_transaksi) }}" target="_blank" class="btn btn-primary">
+                                                    Detail
+                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -121,55 +121,59 @@
     <script src="{{ asset('assets/modules/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
     <script src="{{ asset('assets/js/page/modules-datatables.js') }}"></script>
     <script>
-        $(document).ready(function() {
-            // Function to format numbers as Rupiah (with thousand separators)
-            function formatRupiah(amount) {
-                return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-            }
+    $(document).ready(function() {
+        // Function to format numbers as Rupiah (with thousand separators)
+        function formatRupiah(amount) {
+            return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
 
-            // When the 'View Details' button is clicked
-            $('.view-detail').click(function() {
-                // Get the transaction ID from the data attribute
-                var transactionId = $(this).data('transaction-id');
+        // When the 'View Details' button is clicked
+        $('.view-detail').click(function() {
+            // Get the transaction ID from the data attribute
+            var transactionId = $(this).data('transaction-id');
 
-                // Find the details for this transaction (use the transactionId)
-                var details = [];
-                @foreach ($transaction_details as $detail)
-                    if ('{{ $detail->kode_transaksi_penjualan }}' === transactionId) {
-                        details.push({
-                            nama_produk: '{{ $detail->nama_produk }}',
-                            kuantitas: '{{ $detail->kuantitas }}',
-                            status: '{{ $detail->status }}',
-                            harga: {{ $detail->harga }},
-                            biaya_poin: {{ $detail->biaya_poin }},
-                            total_harga: {{ $detail->total_harga }}
-                        });
-                    }
-                @endforeach
+            // Find the details for this transaction (use the transactionId)
+            var details = [];
+            @foreach ($transaction_details as $detail)
+                if ('{{ $detail->kode_transaksi_penjualan }}' === transactionId) {
+                    details.push({
+                        nama_produk: {!! json_encode($detail->nama_produk) !!},
+                        kuantitas: {!! json_encode($detail->kuantitas) !!},
+                        status: {!! json_encode($detail->status) !!},
+                        harga: {!! json_encode($detail->harga) !!},
+                        biaya_poin: {!! json_encode($detail->biaya_poin) !!},
+                        total_harga: {!! json_encode($detail->total_harga) !!}
+                    });
+                }
+            @endforeach
 
-                // Clear existing modal content
-                $('#transactionDetailList').empty();
+            // Log the details to the console for debugging
+            console.log('Transaction ID:', transactionId);
+            console.log('Transaction Details:', details);
 
-                // Append the transaction details to the modal
-               details.forEach(function(detail) {
-                    var formattedHarga = formatRupiah(detail.harga);
-                    var formattedTotalHarga = formatRupiah(detail.total_harga);
+            // Clear existing modal content
+            $('#transactionDetailList').empty();
 
-                    // Jika harga adalah 0, gunakan biaya_poin
-                    if (detail.harga === 0) {
-                        formattedHarga = detail.biaya_poin + ' Poin'; // Gunakan format biaya_poin
-                        formattedTotalHarga = detail.biaya_poin * detail.kuantitas + ' Poin'; // Total harga juga dalam poin
-                    }
+            // Append the transaction details to the modal
+            details.forEach(function(detail) {
+                var formattedHarga = formatRupiah(detail.harga);
+                var formattedTotalHarga = formatRupiah(detail.total_harga);
 
-                    $('#transactionDetailList').append(
-                        '<li>' + detail.nama_produk + ' - ' + detail.kuantitas + 
-                        ' x ' + formattedHarga + ' = ' + formattedTotalHarga + '</li>'
-                    );
-                });
+                // If harga is 0, use biaya_poin
+                if (detail.harga === 0) {
+                    formattedHarga = detail.biaya_poin + ' Poin'; // Use biaya_poin format
+                    formattedTotalHarga = detail.biaya_poin * detail.kuantitas + ' Poin'; // Total in points
+                }
 
+                $('#transactionDetailList').append(
+                    '<li>' + detail.nama_produk + ' - ' + detail.kuantitas + 
+                    ' x ' + formattedHarga + ' = ' + formattedTotalHarga + '</li>'
+                );
             });
         });
-    </script>
+    });
+</script>
+
 
 
 @endsection

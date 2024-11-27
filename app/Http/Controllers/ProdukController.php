@@ -58,7 +58,19 @@ class ProdukController extends Controller
         ];
 
         $validator = Validator::make($request->all(), $rules, $customMessages);
-
+        $validator->after(function ($validator) use ($request) {
+            // Validasi khusus: salah satu harus diisi, tidak boleh keduanya 0
+            if ($request->harga_produk == 0 && $request->biaya_poin == 0) {
+                $validator->errors()->add('harga_produk', 'Harga produk atau biaya poin harus diisi.');
+                $validator->errors()->add('biaya_poin', 'Harga produk atau biaya poin harus diisi.');
+            }
+    
+            // Validasi khusus: jika biaya_poin diisi, harga_produk harus 0
+            if ($request->biaya_poin > 0 && $request->harga_produk > 0) {
+                $validator->errors()->add('harga_produk', 'Jika biaya poin diisi, harga produk harus 0.');
+            }
+        });
+    
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
@@ -103,7 +115,19 @@ class ProdukController extends Controller
         ];
 
         $validator = Validator::make($request->all(), $rules, $customMessages);
-
+        $validator->after(function ($validator) use ($request) {
+            // Validasi khusus: salah satu harus diisi, tidak boleh keduanya 0
+            if ($request->harga_produk == 0 && $request->biaya_poin == 0) {
+                $validator->errors()->add('harga_produk', 'Harga produk atau biaya poin harus diisi.');
+                $validator->errors()->add('biaya_poin', 'Harga produk atau biaya poin harus diisi.');
+            }
+    
+            // Validasi khusus: jika biaya_poin diisi, harga_produk harus 0
+            if ($request->biaya_poin > 0 && $request->harga_produk > 0) {
+                $validator->errors()->add('harga_produk', 'Jika biaya poin diisi, harga produk harus 0.');
+            }
+        });
+    
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
