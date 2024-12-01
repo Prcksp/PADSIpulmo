@@ -24,6 +24,7 @@
         <li><a class="nav-link" href="{{ url('/penjualans') }}"><i class="fas fa-cart-plus"></i> <span>Penjualan</span></a></li>
         <li><a class="nav-link" href="{{ url('/pembelians') }}"><i class="fas fa-store"></i> <span>Pembelian</span></a></li>
         <li><a class="nav-link" href="{{ url('/riwayatpenjualans') }}"><i class="fas fa-history"></i> <span>Riwayat Penjualan</span></a></li>
+        <li><a class="nav-link" href="{{ url('/laporanpenjualans') }}"><i class="fas fa-history"></i> <span>Laporan Penjualan</span></a></li>
         
     </ul>
 </aside>

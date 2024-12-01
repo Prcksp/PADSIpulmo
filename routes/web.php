@@ -7,6 +7,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\RiwayatPenjualanController;
+use App\Http\Controllers\LaporanPenjualanController;
 use App\Http\Controllers\MyAccountController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -43,6 +44,21 @@ Route::resource('/customers', CustomerController::class)->middleware('check.sess
 Route::resource('/penjualans', PenjualanController::class)->middleware('check.session');
 Route::resource('/pembelians', PembelianController::class)->middleware('check.session');
 Route::resource('/riwayatpenjualans', RiwayatPenjualanController::class)->middleware('check.session');
+Route::resource('/laporanpenjualans', LaporanPenjualanController::class)->middleware('check.session');
+Route::post('/laporanpenjualans/generate', [LaporanPenjualanController::class, 'generateLaporan'])
+    ->name('laporanpenjualans.generate')
+    ->middleware('check.session');
+
+Route::post('/laporanpenjualans/generate-monthly', [LaporanPenjualanController::class, 'generateLaporanBulanan'])
+    ->name('laporanpenjualans.generateMonthly')
+    ->middleware('check.session');
+    // Monthly report route
+Route::get('/pembelians/monthly', [PembelianController::class, 'monthlyReport'])->name('pembelians.monthly');
+
+// Date range report route
+Route::get('/pembelians/date-range', [PembelianController::class, 'dateRangeReport'])->name('pembelians.date-range');
+
+
 Route::post('/penjualans/addCart', [PenjualanController::class, 'addCart'])->name('penjualans.addCart')->middleware('check.session');
 Route::delete('penjualans/{penjualan}', [PenjualanController::class, 'destroy'])->name('penjualans.destroy');
 Route::post('/penjualans/confirm', [PenjualanController::class, 'confirm'])->name('penjualans.confirm');
