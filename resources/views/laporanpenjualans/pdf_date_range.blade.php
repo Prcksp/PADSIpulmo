@@ -62,6 +62,10 @@
             </tr>
         </thead>
         <tbody>
+            @php
+                 $totalPemasukan = 0;
+                 $totalPoin = 0;
+            @endphp
             @foreach ($transactions as $transaction)
                 <tr>
                     <td>{{ $transaction->kode_transaksi_penjualan }}</td>
@@ -71,7 +75,17 @@
                     <td>Rp {{ number_format($transaction->total_harga, 0, ',', '.') }}</td>
                     <td>{{ number_format($transaction->total_biaya_poin, 0, ',', '.') }}</td>
                 </tr>
+                @php 
+                    $totalPemasukan += $transaction->total_harga;
+                    $totalPoin += $transaction->total_biaya_poin;
+                @endphp
+                
             @endforeach
+            <tr class="total-row">
+                <td colspan="4">Total Pemasukan dan Penukaran Poin</td>
+                <td>Rp {{ number_format($totalPemasukan, 0, ',', '.') }}</td>
+                <td>{{ number_format($totalPoin, 0, ',', '.') }}</td>
+            </tr>
         </tbody>
     </table>
 </body>

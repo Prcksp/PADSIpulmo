@@ -62,6 +62,9 @@
             </tr>
         </thead>
         <tbody>
+            @php
+                 $totalPengeluaran = 0;
+            @endphp
             @foreach ($transactions as $transaction)
                 <tr>
                     <td>{{ $transaction->kode_transaksi_pembelian }}</td>
@@ -71,7 +74,19 @@
                     <td>{{ $transaction->jumlah }}</td>
                     <td>Rp {{ number_format($transaction->total_harga, 0, ',', '.') }}</td>
                 </tr>
+                @php 
+                    $totalPengeluaran += $transaction->total_harga;
+                @endphp
+
             @endforeach
+            <tr class="total-row">
+                <td 
+                    colspan="5">Total Pengeluaran                   
+                </td>
+                <td>
+                    Rp {{ number_format($totalPengeluaran, 0, ',', '.') }}
+                </td>
+            </tr>
         </tbody>
     </table>
 </body>
