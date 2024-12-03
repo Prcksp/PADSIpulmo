@@ -52,6 +52,13 @@ Route::post('/laporanpenjualans/generate', [LaporanPenjualanController::class, '
 Route::post('/laporanpenjualans/generate-monthly', [LaporanPenjualanController::class, 'generateLaporanBulanan'])
     ->name('laporanpenjualans.generateMonthly')
     ->middleware('check.session');
+Route::post('/laporanpenjualans/generatePembelian', [LaporanPenjualanController::class, 'generatePembelian'])
+    ->name('laporanpenjualans.generatePembelian')
+    ->middleware('check.session');
+
+Route::post('/laporanpenjualans/generate-pembelian-monthly', [LaporanPenjualanController::class, 'generatePembelianMonthly'])
+    ->name('laporanpenjualans.generatePembelianMonthly')
+    ->middleware('check.session');
     // Monthly report route
 Route::get('/pembelians/monthly', [PembelianController::class, 'monthlyReport'])->name('pembelians.monthly');
 

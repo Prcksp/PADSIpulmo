@@ -3,7 +3,7 @@
 <head>
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/components.css') }}">
-    <title>Laporan Penjualan</title>
+    <title>Laporan Pembelian Bulanan</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -41,35 +41,35 @@
 <body>
     <div class="header">
         <div class="title">
-            Laporan Penjualan
+            Laporan Pembelian Bulanan
         </div>
         <div class="subtitle">
             Pulmo Coffee
         </div>
     </div>
     
-    <p>Periode: {{ $start_date }} - {{ $end_date }}</p>
+    <p>Periode: {{ $month }} / {{ $year }}</p>
 
     <table>
         <thead>
             <tr>
                 <th>Kode Transaksi</th>
                 <th>Tanggal Transaksi</th>
-                <th>Nama Pelanggan</th>
-                <th>Rincian Produk</th>
+                <th>Nama Pengguna</th>
+                <th>Nama Barang</th>
+                <th>Jumlah</th>
                 <th>Total Harga</th>
-                <th>Biaya Poin</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($transactions as $transaction)
                 <tr>
-                    <td>{{ $transaction->kode_transaksi_penjualan }}</td>
+                    <td>{{ $transaction->kode_transaksi_pembelian }}</td>
                     <td>{{ $transaction->tanggal_transaksi }}</td>
-                    <td>{{ $transaction->nama_customer }}</td>
-                    <td>{{ $transaction->rincian_produk }}</td>
+                    <td>{{ $transaction->nama_pengguna }}</td>
+                    <td>{{ $transaction->nama_barang }}</td>
+                    <td>{{ $transaction->jumlah }}</td>
                     <td>Rp {{ number_format($transaction->total_harga, 0, ',', '.') }}</td>
-                    <td>{{ number_format($transaction->total_biaya_poin, 0, ',', '.') }}</td>
                 </tr>
             @endforeach
         </tbody>

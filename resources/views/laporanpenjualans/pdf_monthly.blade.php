@@ -3,7 +3,7 @@
 <head>
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/components.css') }}">
-    <title>Laporan Penjualan</title>
+    <title>Laporan Penjualan Bulanan</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -41,14 +41,14 @@
 <body>
     <div class="header">
         <div class="title">
-            Laporan Penjualan
+            Laporan Penjualan Bulanan
         </div>
         <div class="subtitle">
             Pulmo Coffee
         </div>
     </div>
     
-    <p>Periode: {{ $start_date }} - {{ $end_date }}</p>
+    <p>Periode: {{ $month }} / {{ $year }}</p>
 
     <table>
         <thead>
