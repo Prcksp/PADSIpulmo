@@ -107,7 +107,9 @@
             <!-- Second Row -->
             <div class="row">
                 <!-- Cart Table -->
+                
                 <div class="col-lg-8 col-md-12">
+
                     <div class="card">
                         <div class="card-header">
                             <h4>Data Keranjang</h4>
@@ -164,6 +166,9 @@
 
                <!-- Payment Confirmation -->
                 <div class="col-lg-4 col-md-12">
+                 <div class="alert alert-danger d-none" role="alert" id="error-alert">
+                    Uang pelanggan tidak mencukupi untuk membayar total harga!
+                </div>
                     <div class="card">
                         <div class="card-header">
                             <h4>Konfirmasi Pembayaran</h4>
@@ -175,16 +180,25 @@
                                     <label for="kode_transaksi">Kode Transaksi</label>
                                     <input type="text" id="kode_transaksi" name="kode_transaksi" class="form-control" value="{{ $kodeTransaksi }}" readonly>
                                 </div>
-
                                 <div class="form-group">
                                     <label for="customer">Pilih Nama Pelanggan</label>
-                                    <select id="customer" name="customer" class="form-control select2" required>
+                                    <select id="customer" name="customer" class="form-control select2" 
+                                        {{ count($transactions) === 0 ? 'disabled' : '' }} required>
                                         <option value="" disabled selected>Cari dan pilih pelanggan</option>
                                         @foreach ($customers as $customer)
-                                            <option value="{{ $customer->id_customer }}">{{ $customer->nama_customer }} - {{ $customer->jumlah_poin }} Poin</option>
+                                            <option value="{{ $customer->id_customer }}">{{ $customer->nama_customer }}</option>
                                         @endforeach
                                     </select>
                                 </div>
+                                <!--<div class="form-group">-->
+                                <!--    <label for="customer">Pilih Nama Pelanggan</label>-->
+                                <!--    <select id="customer" name="customer" class="form-control select2" required>-->
+                                <!--        <option value="" disabled selected>Cari dan pilih pelanggan</option>-->
+                                <!--        @foreach ($customers as $customer)-->
+                                <!--            <option value="{{ $customer->id_customer }}">{{ $customer->nama_customer }} - {{ $customer->jumlah_poin }} Poin</option>-->
+                                <!--        @endforeach-->
+                                <!--    </select>-->
+                                <!--</div>-->
 
                                 <div class="form-group">
                                     <label for="total_harga">Total Harga</label>
@@ -210,9 +224,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="alert alert-danger d-none" role="alert" id="error-alert">
-                    Uang pelanggan tidak mencukupi untuk membayar total harga!
-                </div>
+
 
                 <script>
                     document.addEventListener("DOMContentLoaded", function () {

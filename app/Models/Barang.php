@@ -14,7 +14,7 @@ class Barang extends Model
      *
      * @var string
      */
-    protected $table = 'barang';
+    protected $table = 'Barang';
 
     /**
      * The primary key associated with the table.

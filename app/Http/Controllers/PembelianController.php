@@ -19,7 +19,7 @@ class PembelianController extends Controller
     
         // Retrieve transactions with joins
         $data['transactions'] = DB::table('transaksi_pembelian')
-            ->join('barang', 'transaksi_pembelian.id_barang', '=', 'barang.id_barang')
+            ->join('Barang', 'transaksi_pembelian.id_barang', '=', 'Barang.id_barang')
             ->join('users', 'transaksi_pembelian.id_pengguna', '=', 'users.id')
             ->select(
                 'transaksi_pembelian.kode_transaksi_pembelian as kode_transaksi',
@@ -28,13 +28,13 @@ class PembelianController extends Controller
                 'users.email as email_pengguna',
                 'users.phone_number as no_telepon_pengguna',
                 'transaksi_pembelian.jumlah',
-                'barang.nama_barang',
-                'barang.harga_barang',
+                'Barang.nama_barang',
+                'Barang.harga_barang',
                 'transaksi_pembelian.total_harga',
                 'users.name as user_name'
             )
             ->get();
-        $data['barang'] = DB::table('barang')->get(); // Retrieve all barang
+        $data['barang'] = DB::table('Barang')->get(); // Retrieve all barang
         return view('pembelians.index', $data);
     }
     
@@ -43,7 +43,7 @@ class PembelianController extends Controller
     {
         // Validation rules
         $rules = [
-            'id_barang.*' => 'required|exists:barang,id_barang',
+            'id_barang.*' => 'required|exists:Barang,id_barang',
             'jumlah.*' => 'required|integer|min:1',
         ];
 
@@ -73,7 +73,7 @@ class PembelianController extends Controller
                 $jumlah = $request->jumlah[$index];
 
                 // Ambil data barang berdasarkan ID
-                $barang = DB::table('barang')->where('id_barang', $id_barang)->first();
+                $barang = DB::table('Barang')->where('id_barang', $id_barang)->first();
                 if (!$barang) {
                     throw new \Exception("Barang dengan ID {$id_barang} tidak ditemukan.");
                 }

@@ -12,8 +12,8 @@ class DashboardController extends Controller
         $data['pageTitle'] = 'Dashboard';
     
         // Count total data for each section using raw queries
-        $data['dataBarangCount'] = DB::select('SELECT COUNT(*) AS count FROM barang')[0]->count;
-        $data['dataProdukCount'] = DB::select('SELECT COUNT(*) AS count FROM produk')[0]->count;
+        $data['dataBarangCount'] = DB::select('SELECT COUNT(*) AS count FROM Barang')[0]->count;
+        $data['dataProdukCount'] = DB::select('SELECT COUNT(*) AS count FROM Produk')[0]->count;
         $data['dataPelangganCount'] = DB::select('SELECT COUNT(*) AS count FROM customer')[0]->count;
         $data['dataPegawaiCount'] = DB::select('SELECT COUNT(*) AS count FROM users')[0]->count;
         $data['dataTransaksiCount'] = DB::select('SELECT COUNT(*) AS count FROM transaksi_penjualan')[0]->count;

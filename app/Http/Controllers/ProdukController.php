@@ -46,13 +46,14 @@ class ProdukController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'nama_produk' => 'required|string|max:50',
+            'nama_produk' => 'required|string|max:50|unique:Produk,nama_produk',
             'deskripsi_produk' => 'nullable|string|max:50',
             'harga_produk' => 'required|numeric',
             'biaya_poin' => 'required|numeric'
         ];
 
         $customMessages = [
+            'nama_produk.unique' => 'Nama produk sudah ada dalam sistem!',
             'nama_produk.required' => 'Nama produk belum diisi!',
             'harga_produk.required' => 'Harga produk belum diisi!',
         ];
@@ -102,14 +103,16 @@ class ProdukController extends Controller
      */
     public function update(Request $request, $id_produk)
     {
+        $produk = Produk::findOrFail($id_produk);
         $rules = [
-            'nama_produk' => 'required|string|max:50',
+            'nama_produk' => 'required|string|max:50|unique:Produk,nama_produk,' . $id_produk . ',id_produk',
             'deskripsi_produk' => 'nullable|string|max:50',
             'harga_produk' => 'required|numeric',
         ];
 
         $customMessages = [
             'nama_produk.required' => 'Nama produk belum diisi!',
+            'nama_produk.unique' => 'Nama produk sudah ada dalam sistem!',
             'harga_produk.required' => 'Harga produk belum diisi!',
             'biaya_poin.required' => 'Biaya poin belum diisi!',
         ];

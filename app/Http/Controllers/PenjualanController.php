@@ -24,16 +24,16 @@ class PenjualanController extends Controller
 
         // Get transactions with necessary joins
         $data['transactions'] = DB::table('detail_transaksi_penjualan')
-            ->join('produk', 'detail_transaksi_penjualan.id_produk', '=', 'produk.id_produk')
+            ->join('Produk', 'detail_transaksi_penjualan.id_produk', '=', 'Produk.id_produk')
             // ->join('customer', 'detail_transaksi_penjualan.id_customer', '=', 'customer.id_customer')
             ->join('users', 'detail_transaksi_penjualan.id_pengguna', '=', 'users.id')  // Assuming users table is linked with 'id' column
             ->where('detail_transaksi_penjualan.status', 'belum_bayar') // Add this condition
             ->select(
                 'detail_transaksi_penjualan.*',
                 'detail_transaksi_penjualan.id_detail_transaksi_penjualan as id_detail_transaksi',
-                'produk.nama_produk',
-                'produk.harga_produk',
-                'produk.biaya_poin',
+                'Produk.nama_produk',
+                'Produk.harga_produk',
+                'Produk.biaya_poin',
                 // 'customer.nama_customer',
                 // 'customer.email_customer',
                 // 'customer.no_telepon_customer', 
@@ -43,9 +43,9 @@ class PenjualanController extends Controller
 
         // Sum total harga using raw query
         $totalHarga = DB::table('detail_transaksi_penjualan')
-            ->join('produk', 'detail_transaksi_penjualan.id_produk', '=', 'produk.id_produk')
+            ->join('Produk', 'detail_transaksi_penjualan.id_produk', '=', 'Produk.id_produk')
             ->where('detail_transaksi_penjualan.status', 'belum_bayar') // Add this condition
-            ->select(DB::raw('SUM(detail_transaksi_penjualan.kuantitas * produk.harga_produk) as total_harga'))
+            ->select(DB::raw('SUM(detail_transaksi_penjualan.kuantitas * Produk.harga_produk) as total_harga'))
             ->first();
 
         // Add totalHarga to data array
@@ -117,7 +117,7 @@ class PenjualanController extends Controller
             // Iterasi setiap item dalam detail transaksi
             foreach ($detailTransaksi as $item) {
                 // Ambil data produk berdasarkan id_produk
-                $produk = DB::table('produk')->where('id_produk', $item->id_produk)->first();
+                $produk = DB::table('Produk')->where('id_produk', $item->id_produk)->first();
 
                 if ($produk->biaya_poin > 0) { // Cek apakah produk memiliki poin yang lebih besar dari 0
                     $hargaBarang = $produk->biaya_poin * $item->kuantitas;

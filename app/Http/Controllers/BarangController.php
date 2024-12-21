@@ -13,6 +13,7 @@ class BarangController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         $data['pageTitle'] = 'Barang List';
@@ -46,7 +47,7 @@ class BarangController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'nama_barang' => 'required|string|max:50|unique:barang,nama_barang', // Check for uniqueness
+            'nama_barang' => 'required|string|max:50|unique:Barang,nama_barang', // Check for uniqueness
             'deskripsi_barang' => 'nullable|string|max:50',
             'jumlah_barang' => 'required|integer',
             'harga_barang' => 'required|numeric',
@@ -97,7 +98,7 @@ class BarangController extends Controller
     
         // Define validation rules
         $rules = [
-            'nama_barang' => 'required|string|max:50|unique:barang,nama_barang,' . $id_barang . ',id_barang',
+            'nama_barang' => 'required|string|max:50|unique:Barang,nama_barang,' . $id_barang . ',id_barang',
             'deskripsi_barang' => 'nullable|string|max:50',
             'jumlah_barang' => 'required|integer',
             'harga_barang' => 'required|numeric',

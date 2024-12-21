@@ -48,7 +48,10 @@ Route::resource('/laporanpenjualans', LaporanPenjualanController::class)->middle
 Route::post('/laporanpenjualans/generate', [LaporanPenjualanController::class, 'generateLaporan'])
     ->name('laporanpenjualans.generate')
     ->middleware('check.session');
-
+Route::get('/clear-cache', function() {
+    $exitCode = Artisan::call('optimize:clear');
+    // return what you want
+});
 Route::post('/laporanpenjualans/generate-monthly', [LaporanPenjualanController::class, 'generateLaporanBulanan'])
     ->name('laporanpenjualans.generateMonthly')
     ->middleware('check.session');

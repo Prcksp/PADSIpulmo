@@ -53,7 +53,7 @@ class LaporanPenjualanController extends Controller
             LEFT JOIN 
                 detail_transaksi_penjualan dtp ON tp.kode_transaksi_penjualan = dtp.kode_transaksi_penjualan
             LEFT JOIN 
-                produk p ON dtp.id_produk = p.id_produk
+                Produk p ON dtp.id_produk = p.id_produk
             LEFT JOIN 
                 customer c ON tp.id_customer = c.id_customer
             WHERE 
@@ -113,7 +113,7 @@ class LaporanPenjualanController extends Controller
             LEFT JOIN 
                 detail_transaksi_penjualan dtp ON tp.kode_transaksi_penjualan = dtp.kode_transaksi_penjualan
             LEFT JOIN 
-                produk p ON dtp.id_produk = p.id_produk
+                Produk p ON dtp.id_produk = p.id_produk
             LEFT JOIN 
                 customer c ON tp.id_customer = c.id_customer
             WHERE 
@@ -153,7 +153,7 @@ class LaporanPenjualanController extends Controller
             LEFT JOIN 
                 users u ON tp.id_pengguna = u.id
             LEFT JOIN 
-                barang b ON tp.id_barang = b.id_barang
+                Barang b ON tp.id_barang = b.id_barang
             WHERE 
                 tp.tanggal_transaksi BETWEEN ? AND ?
         ", [$validated['start_date'], $validated['end_date']]);
@@ -189,7 +189,7 @@ class LaporanPenjualanController extends Controller
             LEFT JOIN 
                 users u ON tp.id_pengguna = u.id
             LEFT JOIN 
-                barang b ON tp.id_barang = b.id_barang
+                Barang b ON tp.id_barang = b.id_barang
             WHERE 
                 YEAR(tp.tanggal_transaksi) = ? AND MONTH(tp.tanggal_transaksi) = ?
         ", [$validated['year'], $validated['month']]);

@@ -27,7 +27,7 @@
                                                 @endforeach
                                             </select>
                                         @elseif ($field === 'password')
-                                            <input type="password" name="{{ $field }}" class="form-control" required>
+                                            <input type="password" name="{{ $field }}" class="form-control" value="default" required disabled>
                                         @else
                                             <input type="{{ $field === 'textarea' ? 'textarea' : 'text' }}" name="{{ $field }}" class="form-control" value="{{ old($field, $user->$field) }}">
                                         @endif
